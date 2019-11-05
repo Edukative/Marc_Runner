@@ -11,10 +11,15 @@ public class SpawnManager : MonoBehaviour
 
     private float startDelay = 2; // the seconds of the delay of the spawn after the start function
     private float repeatRate = 2; // the interval it will be called
+
+    private PlayerContoller playerControllerScript;
+
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnObstacle", startDelay, repeatRate); // call the function constantly
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerContoller>();
+        // find the player in the scene by it's name and retrieve its script
     }
 
     // Update is called once per frame
@@ -25,7 +30,11 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnObstacle ()
     {
-        int obstacleIndex = Random.Range(0, obstaclePrefab.Length);
-        Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation); //spawn obstacle
+        if (!playerControllerScript.isGameOver)
+        {
+            int obstacleIndex = Random.Range(0, obstaclePrefab.Length);
+            Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation); //spawn obstacle
+        }
+            
     }
 }
