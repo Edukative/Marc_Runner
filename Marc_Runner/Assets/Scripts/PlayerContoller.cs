@@ -14,7 +14,7 @@ public class PlayerContoller : MonoBehaviour
 
     public int hp;
 
-    private GameObject hp1;
+    public GameObject hp1;
     private GameObject hp2;
     private GameObject hp3;
     // Start is called before the first frame update
@@ -43,9 +43,20 @@ public class PlayerContoller : MonoBehaviour
     void LoseHP ()
     {
         hp--;
-        if(hp <= 0)
+        Debug.Log(hp);
+        switch (hp) //hp cases
         {
-            isGameOver = true;
+            case 2: hp3.SetActive(false); // if hp is 2
+                break;
+            case 1: hp2.SetActive(false); // if hp is 1
+                break;
+            case 0: hp1.SetActive(false); // if hp is 0
+                isGameOver = true;
+                break;
+            default: hp3.SetActive(true); // default case that is necessary
+                     hp2.SetActive(true);
+                     hp1.SetActive(true);
+                break;
         }
     }
 
@@ -57,6 +68,7 @@ public class PlayerContoller : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle")) // or the player collides with an obstacle
         {
+            LoseHP();
             Destroy(collision.gameObject);
             Debug.Log("Game Over F in the Chat");
         }
