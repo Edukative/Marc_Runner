@@ -14,6 +14,8 @@ public class SpawnManager : MonoBehaviour
 
     private PlayerContoller playerControllerScript;
 
+    public int obstaclesDestroyCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,10 @@ public class SpawnManager : MonoBehaviour
         if (!playerControllerScript.isGameOver)
         {
             int obstacleIndex = Random.Range(0, obstaclePrefab.Length);
-            Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation); //spawn obstacle
+            GameObject obstacle = Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation); //spawn obstacle
+            MoveLeft obsScript = obstacle.GetComponent<MoveLeft>(); // retrieve script from spawned obstacle
+            obsScript.speed = obsScript.speed + (float)obstaclesDestroyCount;
+                                                //transform int to float
         }
             
     }

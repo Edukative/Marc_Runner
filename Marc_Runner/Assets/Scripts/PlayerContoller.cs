@@ -14,20 +14,21 @@ public class PlayerContoller : MonoBehaviour
 
     public int hp;
 
-    public GameObject hp1;
-    private GameObject hp2;
-    private GameObject hp3;
+    private SpriteRenderer hp1;
+    private SpriteRenderer hp2;
+    private SpriteRenderer hp3;
     // Start is called before the first frame update
     void Start()
     {
         playerRB = GetComponent<Rigidbody>(); // Get the Rigidbody component
+        playerAnim = GetComponent<Animator>(); // Get the Animator component
 
         Physics.gravity *= gravityModifier; //Modify the default Unity gravity to your gravity!
 
-
-        hp1 = GameObject.Find("HP 1");
-        hp2 = GameObject.Find("HP 2");
-        hp3 = GameObject.Find("HP 3");
+        GameObject canvas = GameObject.Find("Canvas");
+        hp1 = canvas.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        hp2 = canvas.transform.GetChild(1).GetComponent<SpriteRenderer>();
+        hp3 = canvas.transform.GetChild(2).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
