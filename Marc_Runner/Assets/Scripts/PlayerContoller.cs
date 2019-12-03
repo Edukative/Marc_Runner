@@ -23,11 +23,20 @@ public class PlayerContoller : MonoBehaviour
 
     public ParticleSystem explosion; // the explosion Particle
     public ParticleSystem dirt; // the dirt particle when the player runs
+
+    // Sounds
+
+    private AudioSource playerAudio;
+
+    public AudioClip jumpSound;
+    public AudioClip crashSound;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRB = GetComponent<Rigidbody>(); // Get the Rigidbody component
         playerAnim = GetComponent<Animator>(); // Get the Animator component
+        playerAudio = GetComponent<AudioSource>(); // Get the AudioSource component
 
         Physics.gravity *= gravityModifier; //Modify the default Unity gravity to your gravity!
 
@@ -50,6 +59,9 @@ public class PlayerContoller : MonoBehaviour
 
             // Particles
             dirt.Stop(); // stop playing the particle
+
+            // Sounds
+            playerAudio.PlayOneShot(jumpSound);
         }
     }
 
@@ -73,6 +85,9 @@ public class PlayerContoller : MonoBehaviour
                 // Particles
                 explosion.Play(); // Play the explosion particle
                 dirt.Stop(); // stop playing the particle
+
+                // Sounds
+                playerAudio.PlayOneShot(crashSound);
 
                 break;
             default: hp3.gameObject.SetActive(true); // default case that is necessary
