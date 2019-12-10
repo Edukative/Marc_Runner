@@ -68,7 +68,6 @@ public class PlayerContoller : MonoBehaviour
     void LoseHP ()
     {
         hp--;
-        Debug.Log(hp);
         switch (hp) //hp cases
         {
             case 2: hp3.gameObject.SetActive(false); // if hp is 2

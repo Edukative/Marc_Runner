@@ -16,15 +16,20 @@ public class SpawnManager : MonoBehaviour
 
     public int obstaclesDestroyCount;
 
+
+
+    private float repeatRateMin = 1;
+    private float repeatRateMax = 5;
+
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnObstacle", startDelay, repeatRate); // call the function constantly
+        //InvokeRepeating("SpawnObstacle", startDelay, repeatRate); // call the function constantly
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerContoller>();
         // find the player in the scene by it's name and retrieve its script
 
         //other method at random parameters
-        Invoke("SpawnObstacle", (Random.Range(1f, 5f)));
+        Invoke("SpawnObstacle", (Random.Range(repeatRateMin, repeatRateMax)));
     }
 
     // Update is called once per frame
@@ -40,8 +45,12 @@ public class SpawnManager : MonoBehaviour
             int obstacleIndex = Random.Range(0, obstaclePrefab.Length);
             GameObject obstacle = Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation); //spawn obstacle
             MoveLeft obsScript = obstacle.GetComponent<MoveLeft>(); // retrieve script from spawned obstacle
-            obsScript.speed = obsScript.speed + (float)obstaclesDestroyCount;
-                                                //transform int to float
+            obsScript.speed = obsScript.speed + (float)obstaclesDestroyCount; // transform int to float
+
+            // continuation of the alternative method
+            float randomDelay = Random.Range(repeatRateMin, repeatRateMax);
+            Debug.Log("Random interval" + randomDelay);
+            Invoke("SpawnObstacle", randomDelay);
         }
             
     }
